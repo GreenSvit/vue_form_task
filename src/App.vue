@@ -2,27 +2,53 @@
   <div id="app">
     <h1>Registration</h1>
     <form class="form" @submit.prevent="checkForm">
-      <fieldset v-show="step === 1">
-        <legend>Основные данные</legend>
+      <fieldset class="form__field" v-show="step === 1">
+        <legend class="form__legend">Основные данные</legend>
         <label>
           Фамилия
-          <input v-model.trim="form.surname" type="text" />
+          <input
+            class="form__input"
+            :class="$v.form.surname.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.surname"
+            type="text"
+          />
         </label>
         <label>
           Имя
-          <input v-model.trim="form.name" type="text" />
+          <input
+            class="form__input"
+            :class="$v.form.name.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.name"
+            type="text"
+          />
         </label>
         <label>
           Отчество
-          <input v-model.trim="form.middleName" type="text" />
+          <input
+            class="form__input"
+            :class="$v.form.middleName.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.middleName"
+            type="text"
+          />
         </label>
         <label>
           Дата рождения
-          <input v-model.trim="form.dateOfBirth" type="date" />
+          <input
+            class="form__input"
+            :class="$v.form.dateOfBirth.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.dateOfBirth"
+            type="date"
+            placeholder="ДД.ММ.ГГГ"
+          />
         </label>
         <label>
           Номер телефона
-          <input v-model.trim="form.phone" type="tel" />
+          <input
+            class="form__input"
+            :class="$v.form.phone.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.phone"
+            type="tel"
+          />
         </label>
         <fieldset>
           <legend>Пол</legend>
@@ -47,7 +73,7 @@
         </fieldset>
         <label>
           Группа клиентов
-          <select multiple v-model.trim="form.clientGroup">
+          <select class="form__input" multiple v-model.trim="form.clientGroup">
             <option
               v-for="(clientGroup, index) in clientGroups"
               :value="clientGroup.value"
@@ -59,7 +85,7 @@
         </label>
         <label>
           Лечащий врач
-          <select v-model.trim="form.doctor">
+          <select class="form__input" v-model.trim="form.doctor">
             <option
               v-for="(doctor, index) in doctors"
               :value="doctor.value"
@@ -76,62 +102,117 @@
         <button @click="nextStep" type="button">Следующий шаг</button>
       </fieldset>
 
-      <fieldset v-show="step === 1">
-        <legend>Адрес</legend>
+      <fieldset class="form__field" v-show="step === 1">
+        <legend class="form__legend">Адрес</legend>
         <label>
           Индекс
-          <input v-model.trim="form.postIndex" type="number" />
+          <input
+            class="form__input"
+            :class="$v.form.postIndex.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.postIndex"
+            type="number"
+          />
         </label>
         <label>
           Страна
-          <input v-model.trim="form.country" type="text" />
+          <input
+            class="form__input"
+            :class="$v.form.country.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.country"
+            type="text"
+          />
         </label>
         <label>
           Область
-          <input v-model.trim="form.region" type="text" />
+          <input
+            class="form__input"
+            :class="$v.form.region.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.region"
+            type="text"
+          />
         </label>
         <label>
           Город
-          <input v-model.trim="form.city" type="text" />
+          <input
+            class="form__input"
+            :class="$v.form.city.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.city"
+            type="text"
+          />
         </label>
         <label>
           Улица
-          <input v-model.trim="form.street" type="text" />
+          <input
+            class="form__input"
+            :class="$v.form.street.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.street"
+            type="text"
+          />
         </label>
         <label>
           Дом
-          <input v-model.trim="form.building" type="number" />
+          <input
+            class="form__input"
+            :class="$v.form.building.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.building"
+            type="number"
+          />
         </label>
 
         <button @click="previousStep" type="button">Предыдущий шаг</button>
         <button @click="nextStep" type="button">Следующий шаг</button>
       </fieldset>
 
-      <fieldset v-show="step === 1">
-        <legend>Документ</legend>
+      <fieldset class="form__field" v-show="step === 1">
+        <legend class="form__legend">Документ</legend>
         <label>
           Тип докумемнта
-          <select v-model.trim="form.documentType">
-            <option value="passport">Паспорт</option>
-            <option value="birth certificate">Свидетельство о рождении</option>
-            <option value="driver's license">Вод. удостоверение</option>
+          <select class="form__input" v-model.trim="form.documentType">
+            <option
+              v-for="(documentType, index) in documentTypes"
+              :value="documentType.value"
+              :key="index"
+            >
+              {{ documentType.label }}
+            </option>
           </select>
         </label>
         <label>
           Серия
-          <input v-model.trim="form.passportSeries" type="number" />
+          <input
+            class="form__input"
+            :class="$v.form.passportSeries.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.passportSeries"
+            type="number"
+          />
         </label>
         <label>
           Номер
-          <input v-model.trim="form.passportNumber" type="number" />
+          <input
+            class="form__input"
+            :class="$v.form.passportNumber.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.passportNumber"
+            type="number"
+          />
         </label>
         <label>
           Кем выдан
-          <input v-model.trim="form.issuedBy" type="text" />
+          <input
+            class="form__input"
+            :class="$v.form.issuedBy.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.issuedBy"
+            type="text"
+          />
         </label>
         <label>
           Дата выдачи
-          <input v-model.trim="form.dateOfIssue" type="date" />
+          <input
+            class="form__input"
+            :class="$v.form.dateOfIssue.$error ? 'form__input--invalid' : ''"
+            v-model.trim="form.dateOfIssue"
+            type="date"
+            placeholder="ДД.ММ.ГГГ"
+          />
         </label>
 
         <button @click="previousStep" type="button">Предыдущий шаг</button>
@@ -143,13 +224,7 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import {
-  required,
-  maxLength,
-  minLength,
-  numeric,
-  alphaNumeric,
-} from "vuelidate/lib/validators";
+import { required, maxLength, minLength } from "vuelidate/lib/validators";
 
 export default {
   mixins: [validationMixin],
@@ -173,7 +248,7 @@ export default {
         city: "",
         street: "",
         building: "",
-        documentType: "",
+        documentType: "passport",
         passportSeries: "",
         passportNumber: "",
         issuedBy: "",
@@ -207,6 +282,20 @@ export default {
           value: "Chernysheva",
         },
       ],
+      documentTypes: [
+        {
+          label: "Паспорт",
+          value: "passport",
+        },
+        {
+          label: "Свидетельство о рождении",
+          value: "birth_sertificate",
+        },
+        {
+          label: "Вод. удостоверение",
+          value: "drivers license",
+        },
+      ],
     };
   },
   methods: {
@@ -218,35 +307,34 @@ export default {
     },
     checkForm() {
       this.$v.form.$touch();
-      if (this.$v.form.$error) {
-        alert("Ошибка");
+      if (!this.$v.form.$error) {
+        alert("Отправлено!");
       }
     },
   },
   validations: {
     form: {
-      name: { required, maxLength: maxLength(30) },
-      surname: { required, maxLength: maxLength(30) },
-      middleName: { alphaNumeric, maxLength: maxLength(30) },
+      name: { required, maxLength: maxLength(50) },
+      surname: { required, maxLength: maxLength(50) },
+      middleName: { maxLength: maxLength(50) },
       dateOfBirth: { required },
       phone: {
         required,
         minLength: minLength(11),
         maxLength: maxLength(11),
-        numeric,
       },
       gender: { required },
       clientGroup: { required },
-      postIndex: { maxLength: maxLength(10) },
-      country: { alphaNumeric, maxLength: maxLength(30) },
-      region: { alphaNumeric, maxLength: maxLength(30) },
-      city: { required, alphaNumeric, maxLength: maxLength(30) },
-      street: { alphaNumeric, maxLength: maxLength(30) },
-      building: { alphaNumeric, maxLength: maxLength(30) },
+      postIndex: { maxLength: maxLength(20) },
+      country: { maxLength: maxLength(50) },
+      region: { maxLength: maxLength(50) },
+      city: { required, maxLength: maxLength(50) },
+      street: { maxLength: maxLength(50) },
+      building: { maxLength: maxLength(50) },
       documentType: { required },
-      passportSeries: { alphaNumeric, maxLength: maxLength(30) },
-      passportNumber: { alphaNumeric, maxLength: maxLength(30) },
-      issuedBy: { alphaNumeric, maxLength: maxLength(30) },
+      passportSeries: { maxLength: maxLength(50) },
+      passportNumber: { maxLength: maxLength(50) },
+      issuedBy: { maxLength: maxLength(50) },
       dateOfIssue: { required },
     },
   },
@@ -268,18 +356,30 @@ export default {
   margin: 0 auto;
 }
 
-h3 {
-  margin: 40px 0 0;
+.form__field {
+  border: none;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.form__legend {
+  font-size: 22px;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+.form__input {
+  padding: 5px;
+  background-color: #d1fbff;
+  border: 2px solid #001b4a;
+  border-radius: 3px;
+  flex-grow: 1;
+
+  &--invalid {
+    border-color: red;
+  }
 }
-a {
-  color: #42b983;
+
+label {
+  width: 400px;
+  display: flex;
+  margin-top: 15px;
+  align-items: center;
 }
 </style>
