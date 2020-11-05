@@ -363,6 +363,14 @@
         <button class="form__button" type="submit">Зарегистрироваться</button>
       </fieldset>
     </form>
+    <div v-if="registered" class="popup">
+      <div class="popup__inner">
+        <div class="popup__content">
+          <a @click="registered = false" class="popup__close" href="#">X</a>Вы
+          успешно зарегистрированы!
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -375,6 +383,7 @@ export default {
   data() {
     return {
       step: 1,
+      registered: false,
 
       form1: {
         name: "",
@@ -468,7 +477,7 @@ export default {
     checkForm3() {
       this.$v.form3.$touch();
       if (!this.$v.form3.$error) {
-        alert("Ура");
+        this.registered = true;
       }
     },
   },
@@ -481,10 +490,9 @@ export default {
       phone: {
         required,
         isPhoneNumber: (num) => {
+          num = num.replace(/[+\s]/g, "");
           return (
-            (/7[0-9]{10}/.test(num.replace(/\s/g, "")) &&
-              num.replace(/\s/g, "").length === 11) ||
-            num.replace(/\s/g, "").length === 0
+            (/7[0-9]{10}/.test(num) && num.length === 11) || num.length === 0
           );
         },
       },
@@ -630,13 +638,58 @@ export default {
   border-radius: 5px;
   padding: 5px 10px;
   margin-top: 20px;
+  cursor: pointer;
 
   &:not(:last-child) {
     margin-right: 30px;
   }
 
+  &:hover {
+    background-color: #213474;
+  }
+
   @media (max-width: $mobileWidth) {
     font-size: 15px;
   }
+}
+
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($black, 0.7);
+  top: 0;
+  left: 0;
+}
+
+.popup__inner {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 10px;
+}
+
+.popup__content {
+  box-sizing: border-box;
+  position: relative;
+  width: 500px;
+  height: 300px;
+  text-align: center;
+  background-color: $mainWhite;
+  border: 3px solid $darkBlue;
+  padding-top: 130px;
+  border-radius: 5px;
+  color: $darkBlue;
+  font-size: 25px;
+}
+
+.popup__close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: block;
+  text-decoration: none;
+  color: $darkBlue;
 }
 </style>
