@@ -1,222 +1,366 @@
 <template>
   <div id="app">
     <h1>Registration</h1>
-    <form class="form" @submit.prevent="checkForm">
+    <form class="form" @submit.prevent="checkForm3">
       <fieldset class="form__field" v-show="step === 1">
         <legend class="form__legend">Основные данные</legend>
-        <label>
-          Фамилия
-          <input
-            class="form__input"
-            :class="$v.form.surname.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.surname"
-            type="text"
-          />
-        </label>
-        <label>
-          Имя
-          <input
-            class="form__input"
-            :class="$v.form.name.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.name"
-            type="text"
-          />
-        </label>
-        <label>
-          Отчество
-          <input
-            class="form__input"
-            :class="$v.form.middleName.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.middleName"
-            type="text"
-          />
-        </label>
-        <label>
-          Дата рождения
-          <input
-            class="form__input"
-            :class="$v.form.dateOfBirth.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.dateOfBirth"
-            type="date"
-            placeholder="ДД.ММ.ГГГ"
-          />
-        </label>
-        <label>
-          Номер телефона
-          <input
-            class="form__input"
-            :class="$v.form.phone.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.phone"
-            type="tel"
-          />
-        </label>
-        <fieldset>
-          <legend>Пол</legend>
-          <label>
+        <div class="form__wrapper">
+          <label class="form__label">
+            Фамилия:*
             <input
-              name="gender"
-              type="radio"
-              value="female"
-              v-model="form.gender"
+              class="form__input"
+              :class="$v.form1.surname.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form1.surname"
+              type="text"
             />
-            Женщина
+            <p
+              v-if="$v.form1.surname.$dirty && !$v.form1.surname.required"
+              class="form__invalid-message"
+            >
+              Обязательное поле
+            </p>
+            <p
+              v-if="$v.form1.surname.$dirty && !$v.form1.surname.maxLength"
+              class="form__invalid-message"
+            >
+              Количество символов не должно превышать 50
+            </p>
           </label>
-          <label>
+          <label class="form__label">
+            Имя:*
             <input
-              name="gender"
-              type="radio"
-              value="male"
-              v-model="form.gender"
+              class="form__input"
+              :class="$v.form1.name.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form1.name"
+              type="text"
             />
-            Мужчина
+            <p
+              v-if="$v.form1.name.$dirty && !$v.form1.name.required"
+              class="form__invalid-message"
+            >
+              Обязательное поле
+            </p>
+            <p
+              v-if="$v.form1.name.$dirty && !$v.form1.name.maxLength"
+              class="form__invalid-message"
+            >
+              Количество символов не должно превышать 50
+            </p>
           </label>
-        </fieldset>
-        <label>
-          Группа клиентов
-          <select class="form__input" multiple v-model.trim="form.clientGroup">
-            <option
-              v-for="(clientGroup, index) in clientGroups"
-              :value="clientGroup.value"
-              :key="index"
+          <label class="form__label">
+            Отчество:
+            <input
+              class="form__input"
+              :class="$v.form1.middleName.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form1.middleName"
+              type="text"
+            />
+            <p
+              v-if="
+                $v.form1.middleName.$dirty && !$v.form1.middleName.maxLength
+              "
+              class="form__invalid-message"
             >
-              {{ clientGroup.label }}
-            </option>
-          </select>
-        </label>
-        <label>
-          Лечащий врач
-          <select class="form__input" v-model.trim="form.doctor">
-            <option
-              v-for="(doctor, index) in doctors"
-              :value="doctor.value"
-              :key="index"
+              Количество символов не должно превышать 50
+            </p>
+          </label>
+          <label class="form__label">
+            Дата рождения:*
+            <input
+              class="form__input"
+              :class="$v.form1.dateOfBirth.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form1.dateOfBirth"
+              type="date"
+            />
+            <p
+              v-if="
+                $v.form1.dateOfBirth.$dirty && !$v.form1.dateOfBirth.required
+              "
+              class="form__invalid-message"
             >
-              {{ doctor.label }}
-            </option>
-          </select>
-        </label>
-        <label>
-          Не отправлять СМС
-          <input v-model.trim="form.noSms" type="checkbox" />
-        </label>
-        <button @click="nextStep" type="button">Следующий шаг</button>
+              Обязательное поле
+            </p>
+          </label>
+          <label class="form__label">
+            Телефон:*
+            <input
+              class="form__input"
+              :class="$v.form1.phone.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form1.phone"
+              type="tel"
+              placeholder="пример: 7 987 654 32 10"
+            />
+            <p
+              v-if="$v.form1.phone.$dirty && !$v.form1.phone.required"
+              class="form__invalid-message"
+            >
+              Обязательное поле
+            </p>
+            <p
+              v-if="$v.form1.phone.$dirty && !$v.form1.phone.isPhoneNumber"
+              class="form__invalid-message"
+            >
+              Введите 11 цифр номера телефона, начиная с 7
+            </p>
+          </label>
+          <fieldset class="form__gender-field">
+            <div class="gender-wrapper">
+              <label class="form__label">
+                <input
+                  name="gender"
+                  type="radio"
+                  value="female"
+                  v-model="form1.gender"
+                />
+                Женщина
+              </label>
+              <label class="form__label">
+                <input
+                  name="gender"
+                  type="radio"
+                  value="male"
+                  v-model="form1.gender"
+                />
+                Мужчина
+              </label>
+            </div>
+          </fieldset>
+          <label class="form__label">
+            Группа клиентов:*
+            <select
+              class="form__input"
+              multiple
+              v-model.trim="form1.clientGroup"
+            >
+              <option
+                v-for="(clientGroup, index) in clientGroups"
+                :value="clientGroup.value"
+                :key="index"
+              >
+                {{ clientGroup.label }}
+              </option>
+            </select>
+            <p
+              v-if="
+                $v.form1.clientGroup.$dirty && !$v.form1.clientGroup.required
+              "
+              class="form__invalid-message"
+            >
+              Обязательное поле
+            </p>
+          </label>
+          <label class="form__label">
+            Лечащий врач:
+            <select class="form__input" v-model.trim="form1.doctor">
+              <option
+                v-for="(doctor, index) in doctors"
+                :value="doctor.value"
+                :key="index"
+              >
+                {{ doctor.label }}
+              </option>
+            </select>
+          </label>
+          <label class="form__label">
+            Не отправлять СМС
+            <input v-model.trim="form1.noSms" type="checkbox" />
+          </label>
+        </div>
+        <button class="form__button" @click="checkForm1" type="button">
+          Следующий шаг
+        </button>
       </fieldset>
 
-      <fieldset class="form__field" v-show="step === 1">
+      <fieldset class="form__field" v-show="step === 2">
         <legend class="form__legend">Адрес</legend>
-        <label>
-          Индекс
-          <input
-            class="form__input"
-            :class="$v.form.postIndex.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.postIndex"
-            type="number"
-          />
-        </label>
-        <label>
-          Страна
-          <input
-            class="form__input"
-            :class="$v.form.country.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.country"
-            type="text"
-          />
-        </label>
-        <label>
-          Область
-          <input
-            class="form__input"
-            :class="$v.form.region.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.region"
-            type="text"
-          />
-        </label>
-        <label>
-          Город
-          <input
-            class="form__input"
-            :class="$v.form.city.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.city"
-            type="text"
-          />
-        </label>
-        <label>
-          Улица
-          <input
-            class="form__input"
-            :class="$v.form.street.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.street"
-            type="text"
-          />
-        </label>
-        <label>
-          Дом
-          <input
-            class="form__input"
-            :class="$v.form.building.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.building"
-            type="number"
-          />
-        </label>
-
-        <button @click="previousStep" type="button">Предыдущий шаг</button>
-        <button @click="nextStep" type="button">Следующий шаг</button>
+        <div class="form__wrapper">
+          <label class="form__label">
+            Индекс:
+            <input
+              class="form__input"
+              :class="$v.form2.postIndex.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form2.postIndex"
+              type="number"
+            />
+            <p
+              v-if="$v.form2.postIndex.$dirty && !$v.form2.postIndex.maxLength"
+              class="form__invalid-message"
+            >
+              Количество символов не должно превышать 50
+            </p>
+          </label>
+          <label class="form__label">
+            Страна:
+            <input
+              class="form__input"
+              :class="$v.form2.country.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form2.country"
+              type="text"
+            />
+            <p
+              v-if="$v.form2.country.$dirty && !$v.form2.country.maxLength"
+              class="form__invalid-message"
+            >
+              Количество символов не должно превышать 50
+            </p>
+          </label>
+          <label class="form__label">
+            Область:
+            <input
+              class="form__input"
+              :class="$v.form2.region.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form2.region"
+              type="text"
+            />
+            <p
+              v-if="$v.form2.region.$dirty && !$v.form2.region.maxLength"
+              class="form__invalid-message"
+            >
+              Количество символов не должно превышать 50
+            </p>
+          </label>
+          <label class="form__label">
+            Город:*
+            <input
+              class="form__input"
+              :class="$v.form2.city.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form2.city"
+              type="text"
+            />
+            <p
+              v-if="$v.form2.city.$dirty && !$v.form2.city.maxLength"
+              class="form__invalid-message"
+            >
+              Количество символов не должно превышать 50
+            </p>
+            <p
+              v-if="$v.form2.city.$dirty && !$v.form2.city.required"
+              class="form__invalid-message"
+            >
+              Обязательное поле
+            </p>
+          </label>
+          <label class="form__label">
+            Улица:
+            <input
+              class="form__input"
+              :class="$v.form2.street.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form2.street"
+              type="text"
+            />
+            <p
+              v-if="$v.form2.street.$dirty && !$v.form2.street.maxLength"
+              class="form__invalid-message"
+            >
+              Количество символов не должно превышать 50
+            </p>
+          </label>
+          <label class="form__label">
+            Дом:
+            <input
+              class="form__input"
+              :class="$v.form2.building.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form2.building"
+            />
+            <p
+              v-if="$v.form2.building.$dirty && !$v.form2.building.maxLength"
+              class="form__invalid-message"
+            >
+              Количество символов не должно превышать 50
+            </p>
+          </label>
+        </div>
+        <button class="form__button" @click="previousStep" type="button">
+          Назад
+        </button>
+        <button class="form__button" @click="checkForm2" type="button">
+          Следующий шаг
+        </button>
       </fieldset>
 
-      <fieldset class="form__field" v-show="step === 1">
+      <fieldset class="form__field" v-show="step === 3">
         <legend class="form__legend">Документ</legend>
-        <label>
-          Тип докумемнта
-          <select class="form__input" v-model.trim="form.documentType">
-            <option
-              v-for="(documentType, index) in documentTypes"
-              :value="documentType.value"
-              :key="index"
+        <div class="form__wrapper">
+          <label class="form__label">
+            Тип:
+            <select class="form__input" v-model.trim="form3.documentType">
+              <option
+                v-for="(documentType, index) in documentTypes"
+                :value="documentType.value"
+                :key="index"
+              >
+                {{ documentType.label }}
+              </option>
+            </select>
+          </label>
+          <label class="form__label">
+            Серия:
+            <input
+              class="form__input"
+              :class="$v.form3.docSeries.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form3.docSeries"
+              type="text"
+            />
+            <p
+              v-if="$v.form3.docSeries.$dirty && !$v.form3.docSeries.maxLength"
+              class="form__invalid-message"
             >
-              {{ documentType.label }}
-            </option>
-          </select>
-        </label>
-        <label>
-          Серия
-          <input
-            class="form__input"
-            :class="$v.form.passportSeries.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.passportSeries"
-            type="number"
-          />
-        </label>
-        <label>
-          Номер
-          <input
-            class="form__input"
-            :class="$v.form.passportNumber.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.passportNumber"
-            type="number"
-          />
-        </label>
-        <label>
-          Кем выдан
-          <input
-            class="form__input"
-            :class="$v.form.issuedBy.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.issuedBy"
-            type="text"
-          />
-        </label>
-        <label>
-          Дата выдачи
-          <input
-            class="form__input"
-            :class="$v.form.dateOfIssue.$error ? 'form__input--invalid' : ''"
-            v-model.trim="form.dateOfIssue"
-            type="date"
-            placeholder="ДД.ММ.ГГГ"
-          />
-        </label>
-
-        <button @click="previousStep" type="button">Предыдущий шаг</button>
-        <button type="submit">Зарегистрироваться</button>
+              Количество символов не должно превышать 50
+            </p>
+          </label>
+          <label class="form__label">
+            Номер:
+            <input
+              class="form__input"
+              :class="$v.form3.docNumber.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form3.docNumber"
+              type="number"
+            />
+            <p
+              v-if="$v.form3.docNumber.$dirty && !$v.form3.docNumber.maxLength"
+              class="form__invalid-message"
+            >
+              Количество символов не должно превышать 50
+            </p>
+          </label>
+          <label class="form__label">
+            Кем выдан:
+            <input
+              class="form__input"
+              :class="$v.form3.issuedBy.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form3.issuedBy"
+              type="text"
+            />
+            <p
+              v-if="$v.form3.issuedBy.$dirty && !$v.form3.issuedBy.maxLength"
+              class="form__invalid-message"
+            >
+              Количество символов не должно превышать 50
+            </p>
+          </label>
+          <label class="form__label">
+            Дата выдачи:*
+            <input
+              class="form__input"
+              :class="$v.form3.dateOfIssue.$error ? 'form__input--invalid' : ''"
+              v-model.trim="form3.dateOfIssue"
+              type="date"
+              placeholder="ДД.ММ.ГГГ"
+            />
+            <p
+              v-if="
+                $v.form3.dateOfIssue.$dirty && !$v.form3.dateOfIssue.required
+              "
+              class="form__invalid-message"
+            >
+              Обязательное поле
+            </p>
+          </label>
+        </div>
+        <button class="form__button" @click="previousStep" type="button">
+          Назад
+        </button>
+        <button class="form__button" type="submit">Зарегистрироваться</button>
       </fieldset>
     </form>
   </div>
@@ -224,7 +368,7 @@
 
 <script>
 import { validationMixin } from "vuelidate";
-import { required, maxLength, minLength } from "vuelidate/lib/validators";
+import { required, maxLength } from "vuelidate/lib/validators";
 
 export default {
   mixins: [validationMixin],
@@ -232,26 +376,31 @@ export default {
     return {
       step: 1,
 
-      form: {
+      form1: {
         name: "",
         surname: "",
         middleName: "",
         dateOfBirth: "",
-        phone: 7,
+        phone: "",
         gender: "female",
-        clientGroup: [],
-        doctor: "ivanov",
         noSms: false,
+        doctor: "ivanov",
+        clientGroup: [],
+      },
+      form2: {
         postIndex: "",
         country: "",
         region: "",
         city: "",
         street: "",
         building: "",
+      },
+      form3: {
         documentType: "passport",
-        passportSeries: "",
-        passportNumber: "",
+        docSeries: "",
+        docNumber: "",
         issuedBy: "",
+        dateOfIssue: "",
       },
 
       clientGroups: [
@@ -299,41 +448,61 @@ export default {
     };
   },
   methods: {
-    nextStep() {
-      this.step++;
-    },
     previousStep() {
-      this.step--;
+      if (this.step > 0) {
+        this.step--;
+      }
     },
-    checkForm() {
-      this.$v.form.$touch();
-      if (!this.$v.form.$error) {
-        alert("Отправлено!");
+    checkForm1() {
+      this.$v.form1.$touch();
+      if (!this.$v.form1.$error) {
+        this.step++;
+      }
+    },
+    checkForm2() {
+      this.$v.form2.$touch();
+      if (!this.$v.form2.$error) {
+        this.step++;
+      }
+    },
+    checkForm3() {
+      this.$v.form3.$touch();
+      if (!this.$v.form3.$error) {
+        alert("Ура");
       }
     },
   },
   validations: {
-    form: {
+    form1: {
       name: { required, maxLength: maxLength(50) },
       surname: { required, maxLength: maxLength(50) },
       middleName: { maxLength: maxLength(50) },
       dateOfBirth: { required },
       phone: {
         required,
-        minLength: minLength(11),
-        maxLength: maxLength(11),
+        isPhoneNumber: (num) => {
+          return (
+            (/7[0-9]{10}/.test(num.replace(/\s/g, "")) &&
+              num.replace(/\s/g, "").length === 11) ||
+            num.replace(/\s/g, "").length === 0
+          );
+        },
       },
       gender: { required },
       clientGroup: { required },
+    },
+    form2: {
       postIndex: { maxLength: maxLength(20) },
       country: { maxLength: maxLength(50) },
       region: { maxLength: maxLength(50) },
       city: { required, maxLength: maxLength(50) },
       street: { maxLength: maxLength(50) },
       building: { maxLength: maxLength(50) },
+    },
+    form3: {
       documentType: { required },
-      passportSeries: { maxLength: maxLength(50) },
-      passportNumber: { maxLength: maxLength(50) },
+      docSeries: { maxLength: maxLength(50) },
+      docNumber: { maxLength: maxLength(50) },
       issuedBy: { maxLength: maxLength(50) },
       dateOfIssue: { required },
     },
@@ -343,43 +512,131 @@ export default {
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: $Raleway;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #00cfff;
+  color: $lightBlue;
   margin-top: 60px;
 }
 
 .form {
+  box-sizing: border-box;
   max-width: 1000px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (max-width: $mobileWidth) {
+    padding: 0 2vw;
+  }
 }
 
 .form__field {
   border: none;
+  gap: 100px;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
 }
 
 .form__legend {
-  font-size: 22px;
+  font-size: 25px;
 }
 
 .form__input {
+  box-sizing: border-box;
+  display: block;
+  font-size: 20px;
+  margin-left: 10px;
   padding: 5px;
-  background-color: #d1fbff;
-  border: 2px solid #001b4a;
-  border-radius: 3px;
+  background-color: $mainWhite;
+  border: 2px solid $darkBlue;
+  border-radius: 5px;
   flex-grow: 1;
 
   &--invalid {
-    border-color: red;
+    border-color: $error;
+  }
+
+  @media (max-width: $mobileWidth) {
+    font-size: 15px;
   }
 }
 
-label {
+.form__label {
+  box-sizing: border-box;
   width: 400px;
   display: flex;
   margin-top: 15px;
   align-items: center;
+  padding-bottom: 10px;
+  position: relative;
+  font-size: 20px;
+
+  @media (max-width: $mobileWidth) {
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    font-size: 15px;
+  }
+}
+
+.form__invalid-message {
+  font-size: 13px;
+  color: $error;
+  position: absolute;
+  bottom: -22px;
+  width: 100%;
+  text-align: center;
+
+  @media (max-width: $mobileWidth) {
+    font-size: 10px;
+    bottom: -15px;
+  }
+}
+
+.form__wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.form__gender-field {
+  border: none;
+  width: 400px;
+
+  @media (max-width: $mobileWidth) {
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+  }
+}
+
+.form__gender-field .form__label {
+  width: auto;
+}
+
+.gender-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form__button {
+  font-size: 20px;
+  border: 2px solid $lightBlue;
+  background-color: inherit;
+  color: $mainWhite;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-top: 20px;
+
+  &:not(:last-child) {
+    margin-right: 30px;
+  }
+
+  @media (max-width: $mobileWidth) {
+    font-size: 15px;
+  }
 }
 </style>
