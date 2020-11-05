@@ -531,8 +531,7 @@ export default {
 .form {
   box-sizing: border-box;
   max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
+  @include margin-auto;
 
   @media (max-width: $mobileWidth) {
     padding: 0 2vw;
@@ -582,8 +581,7 @@ export default {
   font-size: 20px;
 
   @media (max-width: $mobileWidth) {
-    margin-left: auto;
-    margin-right: auto;
+    @include margin-auto;
     width: 300px;
     font-size: 15px;
   }
@@ -615,8 +613,7 @@ export default {
   width: 400px;
 
   @media (max-width: $mobileWidth) {
-    margin-left: auto;
-    margin-right: auto;
+    @include margin-auto;
     width: 300px;
   }
 }
@@ -632,6 +629,7 @@ export default {
 
 .form__button {
   font-size: 20px;
+  font-family: inherit;
   border: 2px solid $lightBlue;
   background-color: inherit;
   color: $mainWhite;
@@ -645,7 +643,11 @@ export default {
   }
 
   &:hover {
-    background-color: #213474;
+    background-color: #055fa4;
+  }
+
+  &:active {
+    opacity: 0.7;
   }
 
   @media (max-width: $mobileWidth) {
@@ -663,10 +665,8 @@ export default {
 }
 
 .popup__inner {
-  display: flex;
+  @include centering;
   min-height: 100vh;
-  justify-content: center;
-  align-items: center;
   padding: 30px 10px;
 }
 
@@ -678,10 +678,15 @@ export default {
   text-align: center;
   background-color: $mainWhite;
   border: 3px solid $darkBlue;
-  padding-top: 130px;
   border-radius: 5px;
   color: $darkBlue;
   font-size: 25px;
+  @include centering;
+
+  @media (max-width: $mobileWidth) {
+    height: 200px;
+    font-size: 20px;
+  }
 }
 
 .popup__close {
@@ -691,5 +696,18 @@ export default {
   display: block;
   text-decoration: none;
   color: $darkBlue;
+
+  &:hover {
+    color: $lightBlue;
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+}
+
+input,
+select {
+  font-family: inherit;
 }
 </style>
