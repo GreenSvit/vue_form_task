@@ -13,18 +13,18 @@
               v-model.trim="form1.surname"
               type="text"
             />
-            <p
+            <span
               v-if="$v.form1.surname.$dirty && !$v.form1.surname.required"
               class="form__invalid-message"
             >
               Обязательное поле
-            </p>
-            <p
+            </span>
+            <span
               v-if="$v.form1.surname.$dirty && !$v.form1.surname.maxLength"
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Имя:*
@@ -34,18 +34,18 @@
               v-model.trim="form1.name"
               type="text"
             />
-            <p
+            <span
               v-if="$v.form1.name.$dirty && !$v.form1.name.required"
               class="form__invalid-message"
             >
               Обязательное поле
-            </p>
-            <p
+            </span>
+            <span
               v-if="$v.form1.name.$dirty && !$v.form1.name.maxLength"
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Отчество:
@@ -55,14 +55,14 @@
               v-model.trim="form1.middleName"
               type="text"
             />
-            <p
+            <span
               v-if="
                 $v.form1.middleName.$dirty && !$v.form1.middleName.maxLength
               "
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Дата рождения:*
@@ -72,14 +72,14 @@
               v-model.trim="form1.dateOfBirth"
               type="date"
             />
-            <p
+            <span
               v-if="
                 $v.form1.dateOfBirth.$dirty && !$v.form1.dateOfBirth.required
               "
               class="form__invalid-message"
             >
               Обязательное поле
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Телефон:*
@@ -90,18 +90,18 @@
               type="tel"
               placeholder="пример: 7 987 654 32 10"
             />
-            <p
+            <span
               v-if="$v.form1.phone.$dirty && !$v.form1.phone.required"
               class="form__invalid-message"
             >
               Обязательное поле
-            </p>
-            <p
+            </span>
+            <span
               v-if="$v.form1.phone.$dirty && !$v.form1.phone.isPhoneNumber"
               class="form__invalid-message"
             >
               Введите 11 цифр номера телефона, начиная с 7
-            </p>
+            </span>
           </label>
           <fieldset class="form__gender-field">
             <div class="gender-wrapper">
@@ -140,14 +140,14 @@
                 {{ clientGroup.label }}
               </option>
             </select>
-            <p
+            <span
               v-if="
                 $v.form1.clientGroup.$dirty && !$v.form1.clientGroup.required
               "
               class="form__invalid-message"
             >
               Обязательное поле
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Лечащий врач:
@@ -182,12 +182,12 @@
               v-model.trim="form2.postIndex"
               type="number"
             />
-            <p
+            <span
               v-if="$v.form2.postIndex.$dirty && !$v.form2.postIndex.maxLength"
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Страна:
@@ -197,12 +197,12 @@
               v-model.trim="form2.country"
               type="text"
             />
-            <p
+            <span
               v-if="$v.form2.country.$dirty && !$v.form2.country.maxLength"
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Область:
@@ -212,12 +212,12 @@
               v-model.trim="form2.region"
               type="text"
             />
-            <p
+            <span
               v-if="$v.form2.region.$dirty && !$v.form2.region.maxLength"
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Город:*
@@ -227,18 +227,18 @@
               v-model.trim="form2.city"
               type="text"
             />
-            <p
+            <span
               v-if="$v.form2.city.$dirty && !$v.form2.city.maxLength"
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
-            <p
+            </span>
+            <span
               v-if="$v.form2.city.$dirty && !$v.form2.city.required"
               class="form__invalid-message"
             >
               Обязательное поле
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Улица:
@@ -248,12 +248,12 @@
               v-model.trim="form2.street"
               type="text"
             />
-            <p
+            <span
               v-if="$v.form2.street.$dirty && !$v.form2.street.maxLength"
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Дом:
@@ -262,12 +262,12 @@
               :class="$v.form2.building.$error ? 'form__input--invalid' : ''"
               v-model.trim="form2.building"
             />
-            <p
+            <span
               v-if="$v.form2.building.$dirty && !$v.form2.building.maxLength"
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
+            </span>
           </label>
         </div>
         <button class="form__button" @click="previousStep" type="button">
@@ -301,12 +301,12 @@
               v-model.trim="form3.docSeries"
               type="text"
             />
-            <p
+            <span
               v-if="$v.form3.docSeries.$dirty && !$v.form3.docSeries.maxLength"
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Номер:
@@ -316,12 +316,12 @@
               v-model.trim="form3.docNumber"
               type="number"
             />
-            <p
+            <span
               v-if="$v.form3.docNumber.$dirty && !$v.form3.docNumber.maxLength"
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Кем выдан:
@@ -331,12 +331,12 @@
               v-model.trim="form3.issuedBy"
               type="text"
             />
-            <p
+            <span
               v-if="$v.form3.issuedBy.$dirty && !$v.form3.issuedBy.maxLength"
               class="form__invalid-message"
             >
               Количество символов не должно превышать 50
-            </p>
+            </span>
           </label>
           <label class="form__label">
             Дата выдачи:*
@@ -345,16 +345,15 @@
               :class="$v.form3.dateOfIssue.$error ? 'form__input--invalid' : ''"
               v-model.trim="form3.dateOfIssue"
               type="date"
-              placeholder="ДД.ММ.ГГГ"
             />
-            <p
+            <span
               v-if="
                 $v.form3.dateOfIssue.$dirty && !$v.form3.dateOfIssue.required
               "
               class="form__invalid-message"
             >
               Обязательное поле
-            </p>
+            </span>
           </label>
         </div>
         <button class="form__button" @click="previousStep" type="button">
@@ -591,13 +590,13 @@ export default {
   font-size: 13px;
   color: $error;
   position: absolute;
-  bottom: -22px;
+  bottom: -8px;
   width: 100%;
   text-align: center;
 
   @media (max-width: $mobileWidth) {
     font-size: 10px;
-    bottom: -15px;
+    bottom: -6px;
   }
 }
 
